@@ -5,6 +5,7 @@ Ask it "What time is it in Tokyo?" and it tells you the current time there.
 
 It can run on either:
 - **Gemini** (Google) – `my_agent/gcp_agent.py`
+- **OpenAI** – `my_agent/openai_agent.py`
 - **Azure OpenAI** – `my_agent/azure_agent.py`
 
 ## 1. Install
@@ -30,8 +31,9 @@ cp my_agent/.env.example my_agent/.env
 ```
 
 Open `my_agent/.env` and fill in:
-- `MODEL_PROVIDER` – `gemini` or `azure`
+- `MODEL_PROVIDER` – `gemini`, `openai` or `azure`
 - For Gemini: `GOOGLE_API_KEY` (free key from [Google AI Studio](https://aistudio.google.com/apikey))
+- For OpenAI: `OPENAI_API_KEY` (from [OpenAI](https://platform.openai.com/api-keys))
 - For Azure: your Azure OpenAI key, endpoint and deployment name
 
 ## 3. Run
@@ -49,8 +51,9 @@ uv run adk run my_agent   # chat in the terminal
 
 ```
 my_agent/
-  __init__.py      # picks Gemini or Azure based on MODEL_PROVIDER
+  __init__.py      # picks Gemini, OpenAI or Azure based on MODEL_PROVIDER
   gcp_agent.py     # agent using Gemini
+  openai_agent.py  # agent using OpenAI
   azure_agent.py   # agent using Azure OpenAI
   .env.example     # sample settings – copy to .env
 ```

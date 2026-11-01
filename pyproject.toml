@@ -1,7 +1,7 @@
 [project]
 name = "adk-playground"
 version = "0.1.0"
-description = "Google ADK agent that tells the time in any city, using Gemini or Azure OpenAI"
+description = "Google ADK agent that tells the time in any city, using Gemini, OpenAI or Azure OpenAI"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
