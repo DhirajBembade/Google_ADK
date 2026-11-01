@@ -1,9 +1,19 @@
+"""City time agent built with the OpenAI Agents SDK (package: openai-agents).
+
+Run: uv run python openai_adk_agent.py
+Needs OPENAI_API_KEY in .env
+"""
 import os
 from datetime import datetime
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-from google.adk.agents.llm_agent import Agent
+from agents import Agent, Runner, function_tool
+from dotenv import load_dotenv
 
+load_dotenv()
+
+# 1. Tool: a normal Python function. @function_tool turns it into a tool the model can call.
+@function_tool
 def get_current_time(city: str, timezone: str) -> dict:
     """Returns the current time in a specified city.
 
@@ -25,12 +35,11 @@ def get_current_time(city: str, timezone: str) -> dict:
         "utc_offset": now.strftime("%z"),
     }
 
-# Gemini reads GOOGLE_API_KEY from my_agent/.env automatically.
-root_agent = Agent(
-    model=os.getenv("GEMINI_MODEL", "gemini-4-argon"),
-    name='root_agent',
-    description="Tells the current time in a specified city.",
-    instruction=(
+# 2. Agent: model + instructions + tools.
+agent = Agent(
+    name="time_agent",
+    model=os.getenv("OPENAI_MODEL", "gpt-6-astra"),
+    instructions=(
         "You are a helpful assistant that tells the current time in cities. "
         "Always use the 'get_current_time' tool, passing the city and its IANA time zone "
         "(e.g. Mumbai -> Asia/Kolkata). Never guess the time yourself. "
@@ -38,3 +47,12 @@ root_agent = Agent(
     ),
     tools=[get_current_time],
 )
+
+# 3. Runner: sends the question, runs any tool calls, returns the final answer.
+if __name__ == "__main__":
+    print("OpenAI Agents SDK - type 'exit' to quit.")
+    history = []
+    while (question := input("\nYou: ").strip()).lower() not in {"exit", "quit"}:
+        result = Runner.run_sync(agent, history + [{"role": "user", "content": question}])
+        print("Agent:", result.final_output)
+        history = result.to_input_list()  # keep the chat history for the next turn

@@ -1,3 +1,16 @@
-google-adk>=2.13.0   # agent framework, includes Gemini support
-litellm>=1.106.6     # needed for OpenAI and Azure OpenAI
+# Google ADK
+google-adk>=2.13.0              # Google's agent framework (Gemini built in)
+litellm>=1.106.6                # lets Google ADK use OpenAI and Azure models
 mcp>=2.3.0
+
+# OpenAI Agents SDK
+openai-agents>=0.20.0
+
+# AWS Strands Agents
+strands-agents>=1.63.0          # uses Amazon Bedrock (installs boto3)
+
+# Microsoft Agent Framework (Azure)
+agent-framework-core>=1.24.0
+agent-framework-openai>=1.18.0  # OpenAI / Azure OpenAI client
+
+python-dotenv>=1.2.4            # reads keys from .env

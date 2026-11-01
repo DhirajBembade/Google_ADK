@@ -3,7 +3,6 @@ from datetime import datetime
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from google.adk.agents.llm_agent import Agent
-from google.adk.models.lite_llm import LiteLlm
 
 def get_current_time(city: str, timezone: str) -> dict:
     """Returns the current time in a specified city.
@@ -26,12 +25,9 @@ def get_current_time(city: str, timezone: str) -> dict:
         "utc_offset": now.strftime("%z"),
     }
 
-# OpenAI reads OPENAI_API_KEY from my_agent/.env.
+# Gemini reads GOOGLE_API_KEY from .env automatically.
 root_agent = Agent(
-    model=LiteLlm(
-        model=f"openai/{os.getenv('OPENAI_MODEL', 'gpt-6-astra')}",
-        api_key=os.getenv("OPENAI_API_KEY"),
-    ),
+    model=os.getenv("GEMINI_MODEL", "gemini-4-argon"),
     name='root_agent',
     description="Tells the current time in a specified city.",
     instruction=(

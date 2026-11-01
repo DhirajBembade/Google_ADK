@@ -1,11 +1,16 @@
 [project]
 name = "adk-playground"
 version = "0.1.0"
-description = "Google ADK agent that tells the time in any city, using Gemini, OpenAI or Azure OpenAI"
+description = "Learn agent frameworks: the same city time agent built with Google ADK, OpenAI Agents SDK, AWS Strands and Microsoft Agent Framework"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "agent-framework-core>=1.24.0",
+    "agent-framework-openai>=1.18.0",
     "google-adk>=2.13.0",
     "litellm>=1.106.6",
     "mcp>=2.3.0",
+    "openai-agents>=0.20.0",
+    "python-dotenv>=1.2.4",
+    "strands-agents>=1.63.0",
 ]
